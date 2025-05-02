@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Period Calculator Copy Button</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn:hover {
+        background-color: #0056b3;
+      }
+
+      .btn:active {
+        background-color: #004085;
+      }
+
+      .textarea {
+        display: none;
+      }
+
+      .message {
+        margin-top: 15px;
+        font-size: 1rem;
+        font-weight: bold;
+        min-height: 1.2em;
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .message.success {
+        color: #28a745;
+      }
+
+      .message.error {
+        color: #dc3545;
+      }
+
+      .message.hidden {
+        opacity: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <button class="btn">Copy Code</button>
+    <textarea class="textarea"></textarea>
+    <p class="message"></p>
+
+    <script>
+      const btn = document.querySelector(".btn");
+      const textarea = document.querySelector(".textarea");
+      const msg = document.querySelector(".message");
+
+      btn.addEventListener("click", () => {
+        const code = `
+        <html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Period Calculator </title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: auto;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100vh;  
+      border: none;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <iframe src="https://period-calculator.vercel.app/"></iframe>
+</body>
+</html> 
+`;
+
+        textarea.value = code;
+
+        navigator.clipboard
+          .writeText(textarea.value)
+          .then(() => {
+            msg.textContent = "Code copied to clipboard!";
+            msg.className = "message success";
+            setTimeout(() => {
+              msg.textContent = "";
+              msg.className = "message";
+            }, 2000);
+          })
+          .catch((err) => {
+            console.error("Failed to copy: ", err);
+            msg.textContent = "Failed to copy code.";
+            msg.className = "message error";
+            setTimeout(() => {
+              msg.textContent = "";
+              msg.className = "message";
+            }, 2000);
+          });
+      });
+    </script>
+  </body>
+</html>
